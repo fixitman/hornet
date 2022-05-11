@@ -2,39 +2,81 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import { Container } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import Container from '@mui/material/Container'
+import { Link, useNavigate } from 'react-router-dom';
+
+
+
+const styles = {
+
+  logo: {
+    textDecoration: 'none',
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 22,
+  },
+
+  navlinks: {
+    display: { xs: 'none', sm: 'flex' },
+    alignItems: 'center',
+    flexGrow: 1,
+    marginLeft: 2,
+  },
+
+  buttonStyle: {
+    color: 'white',
+    textAlign: 'start'
+  },
+
+  loginMenu: {
+    
+  },
+
+  menuHolder: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+  }
+}
+
+
+
 
 export default function MyAppBar() {
 
-  let navigate = useNavigate()
+  const navigate = useNavigate()
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" color='primary' >
         <Container>
           <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              News
-            </Typography>
-            <Button  onClick={() => navigate('/Login')} color="inherit">Login</Button>
-          </Toolbar>
+            <Box sx={{ ...styles.menuHolder }}>
+              <Link to={'/'} style={{ ...styles.logo }}>L O G O</Link>
+              <Box sx={styles.navlinks}>
+                <Button size='large' onClick={() => navigate('/Login')} sx={styles.buttonStyle}>Test</Button>
+                <Button size='large' onClick={() => navigate('/Login')} sx={styles.buttonStyle}>Test2</Button>
+                <Button size='large' onClick={() => navigate('/Login')} sx={styles.buttonStyle}>Test3</Button>
+                <Button size='large' onClick={() => navigate('/Login')} sx={styles.buttonStyle}>Test4</Button>
+              </Box>
 
+              <Box sx={{ ...styles.loginMenu }}>
+                <Button size='large' onClick={() => navigate('/Login')} sx={{ ...styles.buttonStyle }}>Login</Button>
+              </Box>
+            </Box>
+
+
+          </Toolbar>
         </Container>
       </AppBar>
     </Box>
   );
 }
+
+
+
+
+
+
