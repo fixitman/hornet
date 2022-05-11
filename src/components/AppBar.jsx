@@ -26,7 +26,8 @@ const styles = {
 
   buttonStyle: {
     color: 'white',
-    textAlign: 'start'
+    textAlign: 'start',
+    "&:hover":{color:'yellow'}
   },
 
   loginMenu: {
@@ -52,11 +53,11 @@ export default function MyAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color='primary' >
         <Container>
-          <Toolbar>
+          <Toolbar >
             <Box sx={{ ...styles.menuHolder }}>
-              <Link to={'/'} style={{ ...styles.logo }}>L O G O</Link>
+              <Link to={'/'} style={styles.logo }>L O G O</Link>
               <Box sx={styles.navlinks}>
-                <Button size='large' onClick={() => navigate('/Login')} sx={styles.buttonStyle}>Test</Button>
+                <Button size='large' onClick={() => navigate('/Login')} sx={{...styles.buttonStyle }}>Test1</Button>
                 <Button size='large' onClick={() => navigate('/Login')} sx={styles.buttonStyle}>Test2</Button>
                 <Button size='large' onClick={() => navigate('/Login')} sx={styles.buttonStyle}>Test3</Button>
                 <Button size='large' onClick={() => navigate('/Login')} sx={styles.buttonStyle}>Test4</Button>
