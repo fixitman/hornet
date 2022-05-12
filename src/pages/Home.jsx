@@ -6,7 +6,7 @@ export default function Home(){
 
 
     return(
-        <Typography variant='h4' style={{fontFamily: 'Tapestry'}}>
+        <Typography variant='h4' >
             Home
         </Typography>
 
