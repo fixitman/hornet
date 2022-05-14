@@ -7,7 +7,8 @@ import Container from '@mui/material/Container'
 import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material';
 
-export default function MyAppBar() {
+
+export default function MyAppBar() {  
 
   const theme = useTheme()
   const styles = {
@@ -60,7 +61,7 @@ export default function MyAppBar() {
                 <Button size='large' onClick={() => navigate('/Login')} sx={styles.buttonStyle}>Test1</Button>
                 <Button size='large' onClick={() => navigate('/Login')} sx={styles.buttonStyle}>Test2</Button>
                 <Button size='large' onClick={() => navigate('/Login')} sx={styles.buttonStyle}>Test3</Button>
-                <Button size='large' onClick={() => navigate('/Login')} sx={styles.buttonStyle}>Test4</Button>
+                <Button size='large' onClick={() => navigate('/Restricted')} sx={styles.buttonStyle}>Restricted</Button>
               </Box>
 
               <Box sx={{ ...styles.loginMenu }}>
