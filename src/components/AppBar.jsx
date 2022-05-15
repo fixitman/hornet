@@ -18,10 +18,11 @@ export default function MyAppBar() {
       color: theme.palette.common.white,
       fontWeight: 'bold',
       fontSize: 22,
+      margin:0
     },
 
     navlinks: {
-      display: { xs: 'none', md: 'flex' },
+      display: { xs: 'none', sm: 'flex' },
       alignItems: 'center',
       flexGrow: 1,
       marginLeft: 2,
@@ -52,15 +53,13 @@ export default function MyAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" >
-        <Container>
+        <Container maxWidth='md'>
           <Toolbar sx={styles.menuHolder}>
            
               <Link to={'/'} style={styles.logo}>L O G O</Link>
               
               <Box sx={styles.navlinks}>
                 <Button size='large' onClick={() => navigate('/Login')} sx={styles.buttonStyle}>Test1</Button>
-                <Button size='large' onClick={() => navigate('/Login')} sx={styles.buttonStyle}>Test2</Button>
-                <Button size='large' onClick={() => navigate('/Login')} sx={styles.buttonStyle}>Test3</Button>
                 <Button size='large' onClick={() => navigate('/Restricted')} sx={styles.buttonStyle}>Restricted</Button>
               </Box>
 

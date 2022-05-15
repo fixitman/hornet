@@ -15,12 +15,12 @@ function App() {
     <>
       <AuthContextProvider>
         <Routes>
+          <Route path='/Login' element={<Login />} />
           <Route path='/' element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path='Login' element={<Login />} />
             <Route path='Restricted' element={
               <RequireAuth>
-                <Restricted/>
+                <Restricted />
               </RequireAuth>
             } />
           </Route>
