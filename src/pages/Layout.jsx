@@ -8,7 +8,7 @@ const Layout = () => {
     return (
         <>
             <MyAppBar />
-            <Container>
+            <Container maxWidth='md'>
                 <Outlet />
 
             </Container>

@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-
+import React, { useContext, useState } from 'react';
 import { Button, Container, Grid, InputAdornment, Paper, TextField, Typography } from "@mui/material";
 import { AuthContext } from '../contexts/AuthContext';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { AccountCircle, Lock, PersonOutline } from '@mui/icons-material';
+import {useLocation, useNavigate } from 'react-router-dom';
+import { Email, Lock, PersonOutline } from '@mui/icons-material';
+
 
 
 const Login = () => {
 
-    
+
     return (
         <>
             <Container maxWidth='sm'>
@@ -24,7 +24,6 @@ const Login = () => {
                             <LoginForm/>
                         </Grid>
                     </Grid>
-
                 </Paper>
             </Container>
         </>
@@ -39,41 +38,50 @@ const LoginForm = () => {
     }
 
     const [values, setValues] = useState(initialValues)
-
-    const handleChange = (name) => (e) => {
-        setValues({ ...values, [name]: e.target.value })
+    const { login } = useContext(AuthContext)
+    const  navigate = useNavigate()
+    const location = useLocation()
+    const handleChange = (e) => {
+        setValues({ ...values, [e.target.name]: e.target.value })
     }
-
     const handleLogin = () => {
         console.log(values)
-        setValues(initialValues)
+        login(values.email, values.password)
+            .then((u) => {
+                if (u) {
+                    setValues(initialValues)
+                    let dest = location && location.state && location.state.from ? location.state.from : '/'
+                    navigate(dest, {replace:true})
+                }else{
+                    alert('invalid username or password')
+                }
+            })
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-    }
     return (
         <form>
             <TextField
                 fullWidth
+                name='email'
                 size='small'
                 label='Email'
                 variant='outlined'
-                onChange={handleChange('email')}
+                onChange={handleChange}
                 value={values.email}
                 sx={{ mb: 2 }}
                 InputProps={{
-                    startAdornment: <InputAdornment position="start"><AccountCircle color='#aaa' /></InputAdornment>,
+                    startAdornment: <InputAdornment position="start"><Email color='#aaa' /></InputAdornment>,
                 }}
 
             />
             <TextField
                 fullWidth
+                name='password'
                 size='small'
                 type='password'
                 label='Password'
                 variant='outlined'
-                onChange={handleChange('password')}
+                onChange={handleChange}
                 value={values.password}
                 sx={{ mb: 4 }}
                 InputProps={{
@@ -113,13 +121,6 @@ const LoginForm = () => {
 //         return (<Button variant='contained' onClick={loginClicked}>Login</Button>)
 //     }
 // }
-
-
-
-
-
-
-
 
 export default Login;
 

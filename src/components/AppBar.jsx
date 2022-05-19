@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container'
 import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material';
+import LoginOut from './LoginOut';
 
 
 export default function MyAppBar() {  
@@ -64,7 +65,7 @@ export default function MyAppBar() {
               </Box>
 
               <Box sx={{ ...styles.loginMenu }}>
-                <Button size='large' onClick={() => navigate('/Login')} sx={{ ...styles.buttonStyle }}>Login</Button>
+                <LoginOut/>
               </Box>
 
           </Toolbar>
