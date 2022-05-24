@@ -1,8 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Button, Container, Grid, InputAdornment, Paper, TextField, Typography } from "@mui/material";
 import { AuthContext } from '../contexts/AuthContext';
-import {useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Email, Lock, PersonOutline } from '@mui/icons-material';
+import { useFormik } from 'formik';
+import * as Yup from 'yup'
 
 
 
@@ -21,7 +23,7 @@ const Login = () => {
                             <PersonOutline color='secondary' sx={{ height: '150px', width: '150px' }} />
                         </Grid>
                         <Grid item xs={12} sx={{ mt: 3 }}>
-                            <LoginForm/>
+                            <LoginForm />
                         </Grid>
                     </Grid>
                 </Paper>
@@ -32,42 +34,61 @@ const Login = () => {
 
 
 const LoginForm = () => {
-    const initialValues = {
-        email: '',
-        password: ''
-    }
+    
 
-    const [values, setValues] = useState(initialValues)
+   
     const { login } = useContext(AuthContext)
-    const  navigate = useNavigate()
+    const navigate = useNavigate()
     const location = useLocation()
-    const handleChange = (e) => {
-        setValues({ ...values, [e.target.name]: e.target.value })
-    }
-    const handleLogin = () => {
+    
+    const handleLogin = (values) => {       
         console.log(values)
         login(values.email, values.password)
             .then((u) => {
-                if (u) {
-                    setValues(initialValues)
+                if (u) {                   
                     let dest = location && location.state && location.state.from ? location.state.from : '/'
-                    navigate(dest, {replace:true})
-                }else{
+                    navigate(dest, { replace: true })
+                } else {
                     alert('invalid username or password')
                 }
             })
     }
 
+    const validationSchema = Yup.object({
+        email: Yup
+            .string('Enter your email')
+            .email('Enter a valid email')
+            .required('Email is required'),
+        password: Yup
+            .string('Enter your password')
+            .required('Password is required'),
+    });
+
+    const initialValues = {
+        email: '',
+        password: ''
+    }
+
+    const formik = useFormik({
+        validationSchema: validationSchema,
+        initialValues: initialValues,     
+        onSubmit: handleLogin  
+    })
+
     return (
-        <form>
+        <form onSubmit={formik.handleSubmit}>
             <TextField
                 fullWidth
+                id='email'
                 name='email'
                 size='small'
                 label='Email'
                 variant='outlined'
-                onChange={handleChange}
-                value={values.email}
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}               
                 sx={{ mb: 2 }}
                 InputProps={{
                     startAdornment: <InputAdornment position="start"><Email color='#aaa' /></InputAdornment>,
@@ -76,13 +97,17 @@ const LoginForm = () => {
             />
             <TextField
                 fullWidth
+                id='password'
                 name='password'
                 size='small'
                 type='password'
                 label='Password'
-                variant='outlined'
-                onChange={handleChange}
-                value={values.password}
+                variant='outlined'                
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.password && Boolean(formik.errors.password)}
+                helperText={formik.touched.password && formik.errors.password}       
                 sx={{ mb: 4 }}
                 InputProps={{
                     startAdornment: <InputAdornment position="start"> <Lock color='#aaa' /></InputAdornment>,
@@ -91,7 +116,7 @@ const LoginForm = () => {
             <Button
                 variant='contained'
                 size='large'
-                onClick={handleLogin}
+                type='submit'
                 fullWidth>Log In</Button>
         </form>
     );
