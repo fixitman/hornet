@@ -1,15 +1,15 @@
 import { createContext, useState } from "react";
-
-
-
+import AuthService from "./FakeAuth";
 
 export const AuthContext = createContext();
 
 const fakeAuth = (username, password) => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            if (username.concat('1') === password) {
-                resolve({ id: 1, displayName: username })
+            let user = AuthService.login(username, password)
+
+            if (user) {
+                resolve(user)
             } else {
                 resolve(null)
             }
@@ -23,17 +23,14 @@ const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState(null)
 
     const login = (username, password) => {
-        
-        return new Promise((resolve,reject)=>{
+
+        return new Promise((resolve, reject) => {
             fakeAuth(username, password)
                 .then((u) => {
-                    setUser({ id: u.id, displayName: u.displayName });
+                    setUser(u)
                     resolve(u)
                 })
         })
-        
-        
-        
     }
 
     const logout = () => {
