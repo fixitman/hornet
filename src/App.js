@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import AuthContextProvider from './contexts/AuthContext';
 import RequireAuth from './components/RequireAuth';
 import Restricted from './pages/Restricted';
+import UserLists from './pages/UserLists';
 
 
 function App() {
@@ -18,9 +19,9 @@ function App() {
           <Route path='/Login' element={<Login />} />
           <Route path='/' element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path='Restricted' element={
+            <Route path='UserLists' element={
               <RequireAuth>
-                <Restricted />
+                <UserLists />
               </RequireAuth>
             } />
           </Route>

@@ -61,7 +61,7 @@ export default function MyAppBar() {
               
               <Box sx={styles.navlinks}>
                 <Button size='large' onClick={() => navigate('/Login')} sx={styles.buttonStyle}>Test1</Button>
-                <Button size='large' onClick={() => navigate('/Restricted')} sx={styles.buttonStyle}>Restricted</Button>
+                <Button size='large' onClick={() => navigate('/UserLists')} sx={styles.buttonStyle}>User Lists</Button>
               </Box>
 
               <Box sx={{ ...styles.loginMenu }}>

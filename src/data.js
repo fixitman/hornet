@@ -5,7 +5,7 @@ const fakeData = {
             {
                 id: 1,
                 email: "fixitman@home.net",
-                password: "Password1980",
+                password: "aaa",
                 displayName: "Mike",
             },
             {
@@ -92,3 +92,12 @@ const fakeData = {
 }
 
 export default fakeData;
+
+
+export const getListsByUser = (id) => {
+    if(!id) return null;
+
+    let lists = fakeData.listData.lists.filter((l) => l.owner === id || l.editors.includes(id));
+    
+    return lists
+}

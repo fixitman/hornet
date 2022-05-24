@@ -10,7 +10,6 @@ import * as Yup from 'yup'
 
 const Login = () => {
 
-
     return (
         <>
             <Container maxWidth='sm'>
@@ -34,18 +33,15 @@ const Login = () => {
 
 
 const LoginForm = () => {
-    
 
-   
     const { login } = useContext(AuthContext)
     const navigate = useNavigate()
     const location = useLocation()
-    
-    const handleLogin = (values) => {       
-        console.log(values)
+
+    const handleLogin = (values) => {
         login(values.email, values.password)
             .then((u) => {
-                if (u) {                   
+                if (u) {
                     let dest = location && location.state && location.state.from ? location.state.from : '/'
                     navigate(dest, { replace: true })
                 } else {
@@ -71,8 +67,8 @@ const LoginForm = () => {
 
     const formik = useFormik({
         validationSchema: validationSchema,
-        initialValues: initialValues,     
-        onSubmit: handleLogin  
+        initialValues: initialValues,
+        onSubmit: handleLogin
     })
 
     return (
@@ -88,7 +84,7 @@ const LoginForm = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}               
+                helperText={formik.touched.email && formik.errors.email}
                 sx={{ mb: 2 }}
                 InputProps={{
                     startAdornment: <InputAdornment position="start"><Email color='#aaa' /></InputAdornment>,
@@ -102,12 +98,12 @@ const LoginForm = () => {
                 size='small'
                 type='password'
                 label='Password'
-                variant='outlined'                
+                variant='outlined'
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={formik.touched.password && Boolean(formik.errors.password)}
-                helperText={formik.touched.password && formik.errors.password}       
+                helperText={formik.touched.password && formik.errors.password}
                 sx={{ mb: 4 }}
                 InputProps={{
                     startAdornment: <InputAdornment position="start"> <Lock color='#aaa' /></InputAdornment>,
@@ -117,7 +113,9 @@ const LoginForm = () => {
                 variant='contained'
                 size='large'
                 type='submit'
-                fullWidth>Log In</Button>
+                fullWidth>
+                    Log In
+            </Button>
         </form>
     );
 }
