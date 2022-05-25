@@ -1,31 +1,36 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { getListsByUser } from '../data';
 import { Typography } from '@mui/material';
+import ListEntry from '../components/ListEntry';
 
 const UserLists = () => {
 
-    const {user} = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
 
     const [lists, setLists] = useState([])
 
 
-    useEffect(()=>{        
-        let userlists = getListsByUser(user.id);       
-        setLists([...userlists])       
-    },[user, setLists])   
-    
-    
-    
-    return (  
+    useEffect(() => {
+        let userlists = getListsByUser(user.id);
+        setLists([...userlists])
+    }, [user, setLists])
+
+  
+
+
+
+    return (
         <>
-            {lists.map((l)=>{
-                console.log('l',l)
-                return(
-                <Typography variant='h5' key={l.id}>{l.title}</Typography>
+            <Typography variant='h5' sx={{ m: 3 }}>
+                {` Welcome, ${user.displayName}`}
+            </Typography>
+            
+            {lists.map((l) => {
+                return (
+                    <ListEntry key={ l.id } title={ l.title } listId={ l.id } />
                 )
             })}
-        
         </>
     );
 
@@ -33,6 +38,6 @@ const UserLists = () => {
 
 
 }
- 
+
 export default UserLists
-;
+    ;
