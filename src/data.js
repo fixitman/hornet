@@ -101,3 +101,8 @@ export const getListsByUser = (id) => {
     
     return lists
 }
+
+export const getListById = (id) => {
+    let list = fakeData.listData.lists.filter(l => l.id === id)
+    return list?.[0] || {}
+}

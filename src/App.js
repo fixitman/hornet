@@ -6,8 +6,8 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import AuthContextProvider from './contexts/AuthContext';
 import RequireAuth from './components/RequireAuth';
-import Restricted from './pages/Restricted';
 import UserLists from './pages/UserLists';
+import ListContents from './pages/ListContents';
 
 
 function App() {
@@ -24,7 +24,13 @@ function App() {
                 <UserLists />
               </RequireAuth>
             } />
+            <Route path='List/:id' element={
+              <RequireAuth>
+                <ListContents />
+              </RequireAuth>
+            } />
           </Route>
+          
         </Routes>
       </AuthContextProvider>
     </>
