@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
-import { Button, Container, Grid, InputAdornment, Paper, TextField, Typography } from "@mui/material";
-import { AuthContext } from '../contexts/AuthContext';
+import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Button, Container, Grid, InputAdornment, Paper, TextField, Typography } from "@mui/material";
 import { Email, Lock, PersonOutline } from '@mui/icons-material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
+import { useStoreActions } from 'easy-peasy';
+import AuthService from '../contexts/FakeAuth'
 
 
 
@@ -34,14 +35,16 @@ const Login = () => {
 
 const LoginForm = () => {
 
-    const { login } = useContext(AuthContext)
+
     const navigate = useNavigate()
     const location = useLocation()
+    const setUser = useStoreActions(actions => actions.setUser);
 
     const handleLogin = (values) => {
-        login(values.email, values.password)
+        AuthService.login(values.email, values.password)
             .then((u) => {
                 if (u) {
+                    setUser(u);
                     let dest = location && location.state && location.state.from ? location.state.from : '/'
                     navigate(dest, { replace: true })
                 } else {
@@ -114,36 +117,13 @@ const LoginForm = () => {
                 size='large'
                 type='submit'
                 fullWidth>
-                    Log In
+                Log In
             </Button>
         </form>
     );
 }
 
 
-
-// const LoginStatus = () => {
-//     const { user, login, logout } = React.useContext(AuthContext)
-//     const location = useLocation();
-//     let navigate = useNavigate()
-
-//     const loginClicked = () => {
-//         login()
-//         if (user && location.state.from) {
-//             let dest = location.state.from.pathname;
-//             navigate(dest, { replace: true })
-//         }
-//     }
-
-//     if (user) {
-//         return (<>
-//             <Typography variant='h5'>{`Welcome, ${user.displayName}`}</Typography>
-//             <Button variant='contained' onClick={logout}>Log out</Button>
-//         </>)
-//     } else {
-//         return (<Button variant='contained' onClick={loginClicked}>Login</Button>)
-//     }
-// }
 
 export default Login;
 

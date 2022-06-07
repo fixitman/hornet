@@ -1,22 +1,20 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
+import React, { useState, useEffect } from 'react';
+import { useStoreState } from 'easy-peasy';
 import { getListsByUser } from '../data';
 import { Typography } from '@mui/material';
 import ListEntry from '../components/ListEntry';
 
 const UserLists = () => {
 
-    const { user } = useContext(AuthContext)
-
+    const user = useStoreState(state => state.user)
     const [lists, setLists] = useState([])
-
 
     useEffect(() => {
         let userlists = getListsByUser(user.id);
         setLists([...userlists])
     }, [user, setLists])
 
-  
+
 
 
 
@@ -25,10 +23,10 @@ const UserLists = () => {
             <Typography variant='h5' sx={{ m: 3 }}>
                 {` Welcome, ${user.displayName}`}
             </Typography>
-            
+
             {lists.map((l) => {
                 return (
-                    <ListEntry key={ l.id } title={ l.title } listId={ l.id } />
+                    <ListEntry key={l.id} title={l.title} listId={l.id} />
                 )
             })}
         </>
@@ -39,5 +37,4 @@ const UserLists = () => {
 
 }
 
-export default UserLists
-    ;
+export default UserLists;

@@ -7,27 +7,31 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { CssBaseline } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material';
+import { StoreProvider } from 'easy-peasy';
+import {authStore} from './store/authStore'
 
 
 
 const theme = createTheme({
-  palette:{
-    mode:'light',
-    
+  palette: {
+    mode: 'light',
+
   }
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <CssBaseline />
+
+  <ThemeProvider theme={theme}>
+    <BrowserRouter>
+      <CssBaseline />
+      <StoreProvider store={authStore}>
         <App />
-      </BrowserRouter>
-    </ThemeProvider>
-  </React.StrictMode>
+      </StoreProvider>
+    </BrowserRouter>
+  </ThemeProvider>
+
 );
 
 // If you want your app to work offline and load faster, you can change

@@ -1,21 +1,25 @@
 import { useTheme } from '@mui/material';
-import React, { useContext } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 import Button from '@mui/material/Button'
 
 
 
-const LoginOut = () => {
-    const theme = useTheme()
 
+
+const LoginOut = () => {
+    const setUser = useStoreActions(actions => actions.setUser);
+    const logout = () => setUser(null)
+    const theme = useTheme()
+    const user = useStoreState(state => state.user);
     const buttonStyle = {
         color: theme.palette.common.white,
         textAlign: 'start',
         "&:hover": { color: theme.palette.text.secondary }
     }
 
-    const { user, logout } = useContext(AuthContext)
+    
     const navigate = useNavigate()
 
     return (
