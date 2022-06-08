@@ -2,8 +2,9 @@ import Data from '../data'
 
 const FakeAuth = {
     login: (username, password) => {
-        const auth = Data.auth.users;
 
+        const auth = Data.auth.users;
+        
         return new Promise((resolve) => {
             setTimeout(() => {
                 let match = auth.find((u) => u.email === username && u.password === password)
@@ -11,7 +12,7 @@ const FakeAuth = {
                     resolve(match)
                 else
                     resolve(null)
-            }, 100)
+            }, 1200)
         })
     }
 }

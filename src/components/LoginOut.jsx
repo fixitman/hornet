@@ -9,9 +9,9 @@ import Button from '@mui/material/Button'
 
 
 const LoginOut = () => {
-    const setUser = useStoreActions(actions => actions.setUser);
-    const logout = () => setUser(null)
-    const theme = useTheme()
+   
+    const logout = useStoreActions(actions => actions.logout);
+    const theme = useTheme();
     const user = useStoreState(state => state.user);
     const buttonStyle = {
         color: theme.palette.common.white,

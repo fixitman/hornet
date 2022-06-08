@@ -5,7 +5,7 @@ import { Email, Lock, PersonOutline } from '@mui/icons-material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
 import { useStoreActions } from 'easy-peasy';
-import AuthService from '../contexts/FakeAuth'
+
 
 
 
@@ -35,22 +35,18 @@ const Login = () => {
 
 const LoginForm = () => {
 
-
     const navigate = useNavigate()
     const location = useLocation()
-    const setUser = useStoreActions(actions => actions.setUser);
+    const login = useStoreActions(actions => actions.login);
 
-    const handleLogin = (values) => {
-        AuthService.login(values.email, values.password)
-            .then((u) => {
-                if (u) {
-                    setUser(u);
-                    let dest = location && location.state && location.state.from ? location.state.from : '/'
-                    navigate(dest, { replace: true })
-                } else {
-                    alert('invalid username or password')
-                }
-            })
+    const handleLogin = async (values) => {
+        let u = await login(values)
+        if (u) {
+            let dest = location?.state?.from ? location.state.from : '/'
+            navigate(dest, { replace: true })
+        } else {
+            alert('invalid username or password')
+        }
     }
 
     const validationSchema = Yup.object({
