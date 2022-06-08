@@ -8,7 +8,7 @@ import reportWebVitals from './reportWebVitals';
 import { CssBaseline } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { StoreProvider } from 'easy-peasy';
-import {authStore} from './store/authStore'
+import {store} from './store/store'
 
 
 
@@ -29,7 +29,7 @@ root.render(
   <ThemeProvider theme={theme}>
     <BrowserRouter>
       <CssBaseline />
-      <StoreProvider store={authStore}>
+      <StoreProvider store={store}>
         <App />
       </StoreProvider>
     </BrowserRouter>

@@ -5,7 +5,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 
 
 const RequireAuth = ({children}) => {
-    const user = useStoreState(state => state.user);    
+    const user = useStoreState(state => state.auth.user);    
     const location = useLocation();
 
     if(!user) return (<Navigate to='/Login' state={{from: location}} replace />)

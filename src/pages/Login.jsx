@@ -37,7 +37,7 @@ const LoginForm = () => {
 
     const navigate = useNavigate()
     const location = useLocation()
-    const login = useStoreActions(actions => actions.login);
+    const login = useStoreActions(actions => actions.auth.login);
 
     const handleLogin = async (values) => {
         let u = await login(values)

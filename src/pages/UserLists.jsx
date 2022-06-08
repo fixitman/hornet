@@ -6,7 +6,7 @@ import ListEntry from '../components/ListEntry';
 
 const UserLists = () => {
 
-    const user = useStoreState(state => state.user)
+    const user = useStoreState(state => state.auth.user)
     const [lists, setLists] = useState([])
 
     useEffect(() => {
