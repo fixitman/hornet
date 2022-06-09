@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Button, Container, Grid, InputAdornment, Paper, TextField, Typography } from "@mui/material";
+import { Button, Container, Grid, InputAdornment, Paper, TextField, Typography, Checkbox, FormControlLabel } from "@mui/material";
 import { Email, Lock, PersonOutline } from '@mui/icons-material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
@@ -61,7 +61,8 @@ const LoginForm = () => {
 
     const initialValues = {
         email: '',
-        password: ''
+        password: '',
+        rememberMe: false
     }
 
     const formik = useFormik({
@@ -103,10 +104,17 @@ const LoginForm = () => {
                 onBlur={formik.handleBlur}
                 error={formik.touched.password && Boolean(formik.errors.password)}
                 helperText={formik.touched.password && formik.errors.password}
-                sx={{ mb: 4 }}
+                sx={{ mb: 0 }}
                 InputProps={{
                     startAdornment: <InputAdornment position="start"> <Lock color='#aaa' /></InputAdornment>,
                 }}
+            />
+            <FormControlLabel
+                id='rememberMe'
+                name='rememberMe'
+                label="Remember Me"
+                control={<Checkbox checked={formik.values.rememberMe} onChange={formik.handleChange} size='medium' />}
+                sx={{width: '100%', ml: '0px', mr:'auto', mb:2, color: 'rgba(0,0,0,0.6)'}}
             />
             <Button
                 variant='contained'
