@@ -9,7 +9,7 @@ const model = {
         setUser: action((state, user) => {
             state.user = user;
         }),
-        login: thunk(async (actions, payload) => {
+        login: thunk(async (actions, payload) => {            
             return signInWithEmailAndPassword(auth, payload.email, payload.password)
                 .then((response) => {
                     actions.setUser(response.user);
@@ -18,6 +18,8 @@ const model = {
                 .catch(() => {
                     return null;
                 })
+
+
         }),
         logout: thunk(async (actions) => {
             return signOut(auth)
