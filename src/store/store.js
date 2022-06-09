@@ -1,5 +1,6 @@
 import { createStore, action, thunk } from 'easy-peasy'
-import AuthService from '../contexts/FakeAuth'
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import { auth } from '../firebase';
 
 
 const model = {
@@ -8,15 +9,23 @@ const model = {
         setUser: action((state, user) => {
             state.user = user;
         }),
-        login: thunk(async (actions, payload) => {
-            const user = await AuthService.login(payload.email, payload.password);
-            actions.setUser(user);
-            return user;
+        login: thunk(async (actions, payload) => {            
+            return signInWithEmailAndPassword(auth, payload.email, payload.password)
+                .then((response) => {
+                    actions.setUser(response.user);
+                    return (response.user);
+                })
+                .catch(() => {
+                    return null;
+                })
+
+
         }),
         logout: thunk(async (actions) => {
-            setTimeout(() => {
-                actions.setUser(null);
-            }, 1200);
+            return signOut(auth)
+                .then(() => {
+                    actions.setUser(null);
+                })
         })
     }
 }
