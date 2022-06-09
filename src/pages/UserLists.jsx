@@ -14,14 +14,10 @@ const UserLists = () => {
         setLists([...userlists])
     }, [user, setLists])
 
-
-
-
-
     return (
         <>
             <Typography variant='h5' sx={{ m: 3 }}>
-                {` Welcome, ${user.email}`}
+                {` Welcome, ${user.displayName}`}
             </Typography>
 
             {lists.map((l) => {
@@ -31,9 +27,6 @@ const UserLists = () => {
             })}
         </>
     );
-
-
-
 
 }
 

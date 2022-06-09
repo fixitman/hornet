@@ -12,14 +12,14 @@ import firebaseConfig from "./secret/firebaseConfig";
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
-// if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-//   connectAuthEmulator(auth, "http://localhost:9099");
-// }
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+  connectAuthEmulator(auth, "http://localhost:9099");
+}
 
 
 const db = getFirestore(app);
-// if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-//   connectFirestoreEmulator(db, 'localhost', 8081, { ssl: false });
-// }
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+  connectFirestoreEmulator(db, 'localhost', 8081, { ssl: false });
+}
 
 export { app, auth, db }
