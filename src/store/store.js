@@ -1,7 +1,9 @@
 import { createStore, action, thunk } from 'easy-peasy'
 import { auth } from '../firebase';
+
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged, browserLocalPersistence,
     browserSessionPersistence, setPersistence } from 'firebase/auth'
+import { userDAO } from '../data';
 
 
 
@@ -14,8 +16,16 @@ const model = {
         }),
 
         subscribeToAuthChanges: thunk((actions)=>{
-            return onAuthStateChanged(auth, (user)=>{
-                actions.setUser(user);
+            return onAuthStateChanged(auth, (authUser)=>{
+                if(authUser){
+                    userDAO.getUserbyId(authUser.uid)
+                    .then((appUser)=>{
+                        actions.setUser(appUser);
+                        console.log('user profile',appUser)
+                    })
+                }else{
+                    actions.setUser(null)
+                }
             })
         }),
         

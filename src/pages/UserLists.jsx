@@ -10,14 +10,14 @@ const UserLists = () => {
     const [lists, setLists] = useState([])
 
     useEffect(() => {
-        let userlists = getListsByUser(user.uid);
+        let userlists = getListsByUser(user.UID);
         setLists([...userlists])
     }, [user, setLists])
 
     return (
         <>
             <Typography variant='h5' sx={{ m: 3 }}>
-                {` Welcome, ${user.displayName}`}
+                {` Welcome, ${user.firstName}`}
             </Typography>
 
             {lists.map((l) => {
