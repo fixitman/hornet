@@ -17,7 +17,7 @@ const UserLists = () => {
     return (
         <>
             <Typography variant='h5' sx={{ m: 3 }}>
-                {` Welcome, ${user.firstName}`}
+                {` Welcome, ${user.firstName} ${user.lastName}`}
             </Typography>
 
             {lists.map((l) => {

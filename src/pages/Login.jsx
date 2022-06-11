@@ -44,9 +44,7 @@ const LoginForm = () => {
         if (u) {
             let dest = location?.state?.from ? location.state.from : '/'
             navigate(dest, { replace: true })
-        } else {
-            alert('invalid username or password')
-        }
+        } 
     }
 
     const validationSchema = Yup.object({

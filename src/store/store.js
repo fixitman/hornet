@@ -39,13 +39,18 @@ const model = {
                     }
                 })
                 .catch((error) => {
-                    console.log(error)
+                    console.log(JSON.stringify(error))
+                    actions.authError(error);
                     return null;
                 })
         }),
 
         logout: thunk(async (actions) => {
             return signOut(auth)                
+        }),
+
+        authError: action((state, error)=>{
+            alert('authError: '+ error.code)
         })
 
     }
