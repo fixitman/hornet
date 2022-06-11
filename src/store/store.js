@@ -19,9 +19,8 @@ const model = {
             return onAuthStateChanged(auth, (authUser)=>{
                 if(authUser){
                     userDAO.getUserbyId(authUser.uid)
-                    .then((appUser)=>{
-                        actions.setUser(appUser);
-                        console.log('user profile',appUser)
+                    .then((appUser)=>{                        
+                        actions.setUser( { UID: authUser.uid, ...appUser });                       
                     })
                 }else{
                     actions.setUser(null)
@@ -39,13 +38,18 @@ const model = {
                     }
                 })
                 .catch((error) => {
-                    console.log(error)
+                    console.log(JSON.stringify(error))
+                    actions.authError(error);
                     return null;
                 })
         }),
 
         logout: thunk(async (actions) => {
             return signOut(auth)                
+        }),
+
+        authError: action((state, error)=>{
+            alert('authError: '+ error.code)
         })
 
     }

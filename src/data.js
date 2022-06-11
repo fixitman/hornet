@@ -1,47 +1,20 @@
 
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from './firebase'
 
 const fakeData = {
-
-    // auth: {
-    //     users: [
-    //         {
-    //             id: "T8V3X37hyLO5JEHVOcnwRTuu3k53",
-    //             email: "fixitman@home.net",
-    //             password: "aaa",
-    //             displayName: "Mike",
-    //         },
-    //         {
-    //             id: '2',
-    //             email: "george@home.net",
-    //             password: "Abcde12345",
-    //             displayName: "George"
-    //         },
-    //         {
-    //             id: '3',
-    //             email: "steve@home.net",
-    //             password: "Abcde12345",
-    //             displayName: "Steve"
-    //         }
-    //     ]
-    // },
-
-
 
     listData: {
         lists: [
             {
                 id: 1000,
                 title: "The first list",
-                owner: "T8V3X37hyLO5JEHVOcnwRTuu3k53",
                 owner: "dFDoH8YjcploAz2AwzIOwLNWNToP",
                 created: new Date(1963, 11, 18, 14, 55, 16, 0).getTime() / 1000,
                 editors: ['2', '3'],
                 items: [
                     {
                         id: 2000,
-                        addedBy: "T8V3X37hyLO5JEHVOcnwRTuu3k53",
                         addedBy: "dFDoH8YjcploAz2AwzIOwLNWNToP",
                         timeAdded: Date.UTC(2022, 4, 11, 23, 2, 14) / 1000,
                         itemText: "Get some stuff done",
@@ -49,7 +22,6 @@ const fakeData = {
                     },
                     {
                         id: 2001,
-                        addedBy: "T8V3X37hyLO5JEHVOcnwRTuu3k53",
                         addedBy: "dFDoH8YjcploAz2AwzIOwLNWNToP",
                         timeAdded: Date.UTC(2022, 4, 11, 23, 4, 14) / 1000,
                         itemText: "Get some more stuff done",
@@ -57,7 +29,6 @@ const fakeData = {
                     },
                     {
                         id: 2002,
-                        addedBy: "T8V3X37hyLO5JEHVOcnwRTuu3k53",
                         addedBy: "dFDoH8YjcploAz2AwzIOwLNWNToP",
                         timeAdded: Date.UTC(2022, 4, 11, 23, 5, 14) / 1000,
                         itemText: "Finish creating test data",
@@ -99,7 +70,7 @@ const fakeData = {
     }
 }
 
-export default fakeData;
+
 
 
 export const getListsByUser = (id) => {
@@ -118,14 +89,16 @@ export const getListById = (id) => {
 export const userDAO = {
     getUserbyId: (uid) => {
         return new Promise((resolve, reject) => {
-            const q = query(collection(db, 'Users'), where('UID', '==', uid));
-            getDocs(q).then((snapshot) => {
-                if(snapshot.size > 0){
-                    resolve(snapshot.docs[0].data());
-                }else{
-                    resolve(null)
-                }
-            })
+            getDoc(doc(db, 'Users/' + uid))
+                .then((snap) => {
+                    resolve(snap.exists ? snap.data() : null)
+                })
         })
+    },
+
+    writeUserProfile: (profile) => {
+        let id = profile.UID
+        delete profile.UID
+        return setDoc(doc(db, 'Users/' + id), profile)
     }
 }
