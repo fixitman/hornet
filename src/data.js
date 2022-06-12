@@ -1,5 +1,5 @@
 
-import {  doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from './firebase'
 
 const fakeData = {
@@ -70,7 +70,7 @@ const fakeData = {
     }
 }
 
-export default fakeData;
+
 
 
 export const getListsByUser = (id) => {
@@ -89,15 +89,16 @@ export const getListById = (id) => {
 export const userDAO = {
     getUserbyId: (uid) => {
         return new Promise((resolve, reject) => {
-            const userRef = doc(db, `Users/${uid}`);
-            getDoc(userRef)
+            getDoc(doc(db, 'Users/' + uid))
                 .then((snap) => {
-                    if (snap.exists) {
-                        resolve(snap.data())
-                    } else {
-                        resolve(null)
-                    }
-                })           
+                    resolve(snap.exists ? snap.data() : null)
+                })
         })
+    },
+
+    writeUserProfile: (profile) => {
+        let id = profile.UID
+        delete profile.UID
+        return setDoc(doc(db, 'Users/' + id), profile)
     }
 }
