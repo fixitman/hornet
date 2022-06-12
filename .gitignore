@@ -30,6 +30,7 @@ firestore-debug.log
 firebase.json
 firebase-debug.log
 .firebaserc
+/savedata
 savedata/firebase-export-metadata.json
 savedata/auth_export/accounts.json
 savedata/auth_export/config.json
