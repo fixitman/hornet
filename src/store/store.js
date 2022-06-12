@@ -19,9 +19,8 @@ const model = {
             return onAuthStateChanged(auth, (authUser)=>{
                 if(authUser){
                     userDAO.getUserbyId(authUser.uid)
-                    .then((appUser)=>{
-                        actions.setUser(appUser);
-                        console.log('user profile',appUser)
+                    .then((appUser)=>{                        
+                        actions.setUser( { UID: authUser.uid, ...appUser });                       
                     })
                 }else{
                     actions.setUser(null)
