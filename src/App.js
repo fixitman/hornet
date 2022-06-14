@@ -4,11 +4,11 @@ import { Route, Routes } from 'react-router-dom';
 import Layout from './pages/Layout'
 import Home from './pages/Home';
 import Login from './pages/Login';
-
 import RequireAuth from './components/RequireAuth';
 import UserLists from './pages/UserLists';
 import ListContents from './pages/ListContents';
 import { useStoreActions } from 'easy-peasy';
+import withSplashScreen from './components/withSplashScreen';
 
 
 function App() {
@@ -21,7 +21,6 @@ function App() {
 
   return (
     <>
-
       <Routes>
         <Route path='/Login' element={<Login />} />
         <Route path='/' element={<Layout />}>
@@ -38,9 +37,8 @@ function App() {
           } />
         </Route>
       </Routes>
-
     </>
   );
 }
 
-export default App;
+export default withSplashScreen(App);
