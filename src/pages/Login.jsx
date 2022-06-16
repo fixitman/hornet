@@ -1,13 +1,10 @@
-import React from 'react';
+import React, { } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Button, Container, Grid, InputAdornment, Paper, TextField, Typography, Checkbox, FormControlLabel } from "@mui/material";
+import { Button, Container, Grid, InputAdornment, Paper, TextField, Typography, Checkbox, FormControlLabel, Box } from "@mui/material";
 import { Email, Lock, PersonOutline } from '@mui/icons-material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
 import { useStoreActions } from 'easy-peasy';
-
-
-
 
 const Login = () => {
 
@@ -44,7 +41,7 @@ const LoginForm = () => {
         if (u) {
             let dest = location?.state?.from ? location.state.from : '/'
             navigate(dest, { replace: true })
-        } 
+        }
     }
 
     const validationSchema = Yup.object({
@@ -70,62 +67,69 @@ const LoginForm = () => {
     })
 
     return (
-        <form onSubmit={formik.handleSubmit}>
-            <TextField
-                fullWidth
-                id='email'
-                name='email'
-                size='small'
-                label='Email'
-                variant='outlined'
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
-                sx={{ mb: 2 }}
-                InputProps={{
-                    startAdornment: <InputAdornment position="start"><Email color='#aaa' /></InputAdornment>,
-                }}
+        <>
+            <form onSubmit={formik.handleSubmit}>
+                <TextField
+                    fullWidth
+                    id='email'
+                    name='email'
+                    size='small'
+                    label='Email'
+                    variant='outlined'
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
+                    sx={{ mb: 2 }}
+                    InputProps={{
+                        startAdornment: <InputAdornment position="start"><Email color='#aaa' /></InputAdornment>,
+                    }}
+                />
 
-            />
-            <TextField
-                fullWidth
-                id='password'
-                name='password'
-                size='small'
-                type='password'
-                label='Password'
-                variant='outlined'
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.password && Boolean(formik.errors.password)}
-                helperText={formik.touched.password && formik.errors.password}
-                sx={{ mb: 0 }}
-                InputProps={{
-                    startAdornment: <InputAdornment position="start"> <Lock color='#aaa' /></InputAdornment>,
-                }}
-            />
-            <FormControlLabel
-                id='rememberMe'
-                name='rememberMe'
-                label="Remember Me"
-                control={<Checkbox checked={formik.values.rememberMe} onChange={formik.handleChange} size='medium' />}
-                sx={{width: '100%', ml: '0px', mr:'auto', mb:2, color: 'rgba(0,0,0,0.6)'}}
-            />
-            <Button
-                variant='contained'
-                size='large'
-                type='submit'
-                fullWidth>
-                Log In
-            </Button>
-        </form>
+                <TextField
+                    fullWidth
+                    id='password'
+                    name='password'
+                    size='small'
+                    type='password'
+                    label='Password'
+                    variant='outlined'
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.password && Boolean(formik.errors.password)}
+                    helperText={formik.touched.password && formik.errors.password}
+                    sx={{ mb: 0 }}
+                    InputProps={{
+                        startAdornment: <InputAdornment position="start"> <Lock color='#aaa' /></InputAdornment>,
+                    }}
+                />
+
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <FormControlLabel
+                        id='rememberMe'
+                        name='rememberMe'
+                        label="Remember Me"
+                        control={<Checkbox checked={formik.values.rememberMe} onChange={formik.handleChange} size='small' />}
+                        sx={{ color: 'rgba(0,0,0,0.6)' }}
+                    />
+                    <Button sx={{ paddingRight: 0, mr: 0 }}>
+                        <Typography variant='subtitle2' align='right'  >Forgot Password</Typography>
+                    </Button>
+                </Box>
+
+                <Button
+                    variant='contained'
+                    size='large'
+                    type='submit'
+                    fullWidth>
+                    Log In
+                </Button>
+            </form>
+        </>
     );
 }
-
-
 
 export default Login;
 
