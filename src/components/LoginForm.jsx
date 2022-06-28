@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Button, InputAdornment, TextField,  Checkbox, FormControlLabel, Box } from "@mui/material";
+import { Button, InputAdornment, TextField, Checkbox, FormControlLabel, Box, Snackbar, Alert } from "@mui/material";
 import { Email, Lock } from '@mui/icons-material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
@@ -9,10 +9,16 @@ import ResetPasswordDialog from '../components/ResetPasswordDialog';
 
 const LoginForm = () => {
 
+    const [snackbarState, setSnackbarState] = React.useState({
+        open: false,
+        message: '',
+        severity: 'success'
+    })
+    
     const navigate = useNavigate()
     const location = useLocation()
     const login = useStoreActions(actions => actions.auth.login);
-    
+
     const handleSubmit = async (values) => {
         let u = await login(values)
         if (u) {
@@ -43,9 +49,19 @@ const LoginForm = () => {
         onSubmit: handleSubmit
     })
 
+    const resetEmailSuccessCallback = (email) => {
+        setSnackbarState({open:true, message:`Reset instructions sent to ${email}.`, severity:'success'})
+    }
+    const resetEmailFailureCallback = (error) => {
+        setSnackbarState({open:true, message:error, severity: 'error'})
+    } 
+    const hideSnackbar = () => {
+        setSnackbarState({ open: false, message: '', severity: 'success' })
+    }
+
     return (
         <>
-            <form onSubmit={formik.handleSubmit} autoComplete='false'>
+            <form onSubmit={formik.handleSubmit} >
                 <TextField
                     fullWidth
                     id='email'
@@ -91,8 +107,12 @@ const LoginForm = () => {
                         control={<Checkbox checked={formik.values.rememberMe} onChange={formik.handleChange} size='small' />}
                         sx={{ color: 'rgba(0,0,0,0.6)' }}
                     />
-                    
-                    <ResetPasswordDialog sendTo={formik.values.email} open={false} />
+
+                    <ResetPasswordDialog
+                        sendTo={formik.values.email}
+                        onEmailSuccess={resetEmailSuccessCallback}
+                        onEmailFailure={resetEmailFailureCallback}
+                    />
 
                 </Box>
 
@@ -104,6 +124,18 @@ const LoginForm = () => {
                     Log In
                 </Button>
             </form>
+            <Snackbar
+                open={snackbarState.open}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                autoHideDuration={6000}
+                onClose={hideSnackbar}>
+                <Alert onClose={hideSnackbar}
+                    severity={snackbarState.severity} 
+                    >
+                    {snackbarState.message}
+                </Alert>
+            </Snackbar>
+
         </>
     );
 }
